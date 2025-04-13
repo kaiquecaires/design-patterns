@@ -1,0 +1,17 @@
+import InstallmentRepository, { InstallmentRepositoryMemory } from "./InstallmentRepository";
+import LoanRepository, { LoanRepositoryMemory } from "./LoanRepository";
+
+export default interface RepositoryFactory {
+    createLoanRepository(): LoanRepository;
+    createInstallmentRepository(): InstallmentRepository;
+}
+
+export class RepositoryMemoryFactory implements RepositoryFactory {
+    createInstallmentRepository(): InstallmentRepository {
+        return InstallmentRepositoryMemory.getInstance();
+    }
+
+    createLoanRepository(): LoanRepository {
+        return LoanRepositoryMemory.getInstance();
+    }
+}
