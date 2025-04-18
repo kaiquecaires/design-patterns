@@ -9,7 +9,7 @@ export default class UpdateLocation {
     async execute (input: Input): Promise<void> {
         const ride = await this.rideRepository.getById(input.rideId);
         const newLocation = new Location(input.lat, input.long, input.date);
-        const segment = ride.createSegment(ride.rideId, ride.lastLocation, newLocation);
+        const segment = ride.createSegment(ride.lastLocation, newLocation);
         ride.updateLocation(newLocation);
         await this.rideRepository.update(ride);
         await this.segmentRepository.save(segment);

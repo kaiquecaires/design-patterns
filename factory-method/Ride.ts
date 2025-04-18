@@ -1,13 +1,10 @@
 import Location from "./Location";
-import * as crypto from "crypto";
 import Segment, { DistanceSegment, TimeSegment } from "./Segment";
 
 export default abstract class Ride {
-    rideId: string;
     lastLocation: Location;
 
-    constructor(location: Location) {
-        this.rideId = crypto.randomUUID();
+    constructor(readonly rideId: string, location: Location) {
         this.lastLocation = location;
     }
 
@@ -17,7 +14,7 @@ export default abstract class Ride {
 
     abstract calculateFare(segments: Segment[]): number
 
-    abstract createSegment(rideId: string, from: Location, to: Location): Segment;
+    abstract createSegment(from: Location, to: Location): Segment;
 }
 
 export class DistanceRide extends Ride {
@@ -29,8 +26,13 @@ export class DistanceRide extends Ride {
         return total * 4;
     }
 
-    createSegment(rideId: string, from: Location, to: Location): Segment {
-        return new DistanceSegment(rideId, from, to);
+    createSegment(from: Location, to: Location): Segment {
+        return new DistanceSegment(this.rideId, from, to);
+    }
+
+    static create(location: Location) {
+        const rideId = crypto.randomUUID();
+        return new DistanceRide(rideId, location);
     }
 }
 
@@ -43,7 +45,12 @@ export class TimeRide extends Ride {
         return total * 1;
     }
 
-    createSegment(rideId: string, from: Location, to: Location): Segment {
-        return new TimeSegment(rideId, from, to);
+    createSegment(from: Location, to: Location): Segment {
+        return new TimeSegment(this.rideId, from, to);
+    }
+
+    static create(location: Location) {
+        const rideId = crypto.randomUUID();
+        return new TimeRide(rideId, location);
     }
 }

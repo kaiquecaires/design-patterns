@@ -10,7 +10,7 @@ test("Deve atualizar a localização de uma corrida por distância", async () =>
     const segmentRepository = new SegmentRepositoryMemory();
 
     const location = new Location(-27.584905257808835, -48.545022195325124, new Date("2021-03-01T10:00:00"));
-    const ride = new DistanceRide(location);
+    const ride = DistanceRide.create(location);
 
     rideRepository.save(ride);
 
@@ -36,7 +36,7 @@ test("Deve atualizar a localização de uma corrida por tempo", async () => {
     const segmentRepository = new SegmentRepositoryMemory();
 
     const location = new Location(-27.584905257808835, -48.545022195325124, new Date("2021-03-01T10:00:00"));
-    const ride = new TimeRide(location);
+    const ride = TimeRide.create(location);
 
     rideRepository.save(ride);
 
