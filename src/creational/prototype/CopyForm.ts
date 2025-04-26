@@ -1,5 +1,3 @@
-import Field from "./Field";
-import Form from "./Form";
 import FormRepository from "./FormRepository";
 
 export default class CopyForm {
